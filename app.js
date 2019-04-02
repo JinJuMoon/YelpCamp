@@ -34,12 +34,22 @@ app.get("/campgrounds", function(req,res){
     {name: "rocky mountain again", image: "https://newhampshirestateparks.reserveamerica.com/webphotos/NH/pid270015/0/540x360.jpg"},
     {name: "campgorund sites list", image: "http://tipsinahmoundscampground.com/wp-content/uploads/2017/07/IMG_6559-copy.jpg"}
   ]
-  res.render("index", {campgrounds: campgrounds});
+  res.render("campgrounds/index", {campgrounds: campgrounds});
 });
 
 app.post("/campgrounds", function(req,res){
-  res.send
+  var name = req.body.name;
+  var image = req.body.image;
+  var newCampground = {name: name, image: image};
+  campgrounds.push(newCampground);
+
+  //redirect to campground page
+  res.redirect("/campgrounds");
 });
+
+app.get("/campgrounds/new", function(req,res){
+  res.render("campgorunds/new");
+})
 
 app.listen(4000, function(){
   console.log("The server is running!");
