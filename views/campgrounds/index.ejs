@@ -1,5 +1,7 @@
 <% include ../partials/header %>
 
+<h1>Campgrounds here!</h1>
+<a href="/campgrounds/new">Make a new campground</a>
 <% campgrounds.forEach(function(campground){ %>
   <h1><%= campground.name %></h1>
   <img src="<%= campground.image %>">
