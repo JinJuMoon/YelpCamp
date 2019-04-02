@@ -29,7 +29,16 @@ app.get("/", function(req,res){
 });
 
 app.get("/campgrounds", function(req,res){
-  res.render("index");
+  var campgrounds = [
+    {name: "a beautiful mountain", image: "https://www.nps.gov/maca/planyourvisit/images/MapleSpringsCampground-Campsite.jpg"},
+    {name: "rocky mountain again", image: "https://newhampshirestateparks.reserveamerica.com/webphotos/NH/pid270015/0/540x360.jpg"},
+    {name: "campgorund sites list", image: "http://tipsinahmoundscampground.com/wp-content/uploads/2017/07/IMG_6559-copy.jpg"}
+  ]
+  res.render("index", {campgrounds: campgrounds});
+});
+
+app.post("/campgrounds", function(req,res){
+  res.send
 });
 
 app.listen(4000, function(){

@@ -1,5 +1,8 @@
 <% include partials/header %>
 
-<h1>this is an index page!</h1>
+<% campgrounds.forEach(function(campground){ %>
+  <h1><%= campground.name %></h1>
+  <img src="<%= campground.image %>">
+<% }) %>
 
 <% include partials/footer %>
