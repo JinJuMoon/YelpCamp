@@ -48,7 +48,7 @@ app.post("/campgrounds", function(req,res){
 });
 
 app.get("/campgrounds/new", function(req,res){
-  res.render("campgorunds/new");
+  res.render("campgrounds/new");
 })
 
 app.listen(4000, function(){
