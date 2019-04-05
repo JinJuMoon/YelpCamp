@@ -16,35 +16,55 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 
+//make campgrounds
 var campgroundSchema = mongoose.Schema({
   name: String,
   image: String,
   description: String
 });
 
-var Campgorund = mongoose.model("campground", campgroundSchema);
+var Campground = mongoose.model("campground", campgroundSchema);
+
+// Campground.create([
+// {name: "a beautiful mountain", image: "https://www.nps.gov/maca/planyourvisit/images/MapleSpringsCampground-Campsite.jpg"},
+// {name: "rocky mountain again", image: "https://newhampshirestateparks.reserveamerica.com/webphotos/NH/pid270015/0/540x360.jpg"},
+// {name: "campgorund sites list", image: "http://tipsinahmoundscampground.com/wp-content/uploads/2017/07/IMG_6559-copy.jpg"}
+// ], function(err, campground){
+//   if(err){
+//     console.log(err);
+//   } else {
+//     console.log("Newly created: ");
+//     console.log(campground);
+//   }
+// });
+
+
 
 app.get("/", function(req,res){
   res.render("landing");
 });
 
 app.get("/campgrounds", function(req,res){
-  var campgrounds = [
-    {name: "a beautiful mountain", image: "https://www.nps.gov/maca/planyourvisit/images/MapleSpringsCampground-Campsite.jpg"},
-    {name: "rocky mountain again", image: "https://newhampshirestateparks.reserveamerica.com/webphotos/NH/pid270015/0/540x360.jpg"},
-    {name: "campgorund sites list", image: "http://tipsinahmoundscampground.com/wp-content/uploads/2017/07/IMG_6559-copy.jpg"}
-  ]
-  res.render("campgrounds/index", {campgrounds: campgrounds});
+  Campground.find({}, function(err, campgrounds){
+    if(err){
+      console.log(err);
+    } else{
+      res.render("campgrounds/index", {campgrounds: campgrounds});
+    }
+  });
 });
 
 app.post("/campgrounds", function(req,res){
   var name = req.body.name;
   var image = req.body.image;
   var newCampground = {name: name, image: image};
-  campgrounds.push(newCampground);
-
-  //redirect to campground page
-  res.redirect("/campgrounds");
+  Campground.create(newCampground, function(err, newlyCreated){
+    if(err){
+      console.log(err);
+    } else {
+      res.redirect("/campgrounds");
+    }
+  });
 });
 
 app.get("/campgrounds/new", function(req,res){
