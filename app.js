@@ -16,7 +16,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 
-//make campgrounds
+// model campground
 var campgroundSchema = mongoose.Schema({
   name: String,
   image: String,
@@ -44,6 +44,7 @@ app.get("/", function(req,res){
   res.render("landing");
 });
 
+// INDEX PAGE
 app.get("/campgrounds", function(req,res){
   Campground.find({}, function(err, campgrounds){
     if(err){
@@ -54,6 +55,7 @@ app.get("/campgrounds", function(req,res){
   });
 });
 
+// CREATE PAGE
 app.post("/campgrounds", function(req,res){
   var name = req.body.name;
   var image = req.body.image;
@@ -67,6 +69,7 @@ app.post("/campgrounds", function(req,res){
   });
 });
 
+// NEW PAGE
 app.get("/campgrounds/new", function(req,res){
   res.render("campgrounds/new");
 })
