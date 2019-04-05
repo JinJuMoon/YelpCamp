@@ -26,9 +26,9 @@ var campgroundSchema = mongoose.Schema({
 var Campground = mongoose.model("campground", campgroundSchema);
 
 // Campground.create([
-// {name: "a beautiful mountain", image: "https://www.nps.gov/maca/planyourvisit/images/MapleSpringsCampground-Campsite.jpg"},
-// {name: "rocky mountain again", image: "https://newhampshirestateparks.reserveamerica.com/webphotos/NH/pid270015/0/540x360.jpg"},
-// {name: "campgorund sites list", image: "http://tipsinahmoundscampground.com/wp-content/uploads/2017/07/IMG_6559-copy.jpg"}
+// {name: "a beautiful mountain", image: "https://www.nps.gov/maca/planyourvisit/images/MapleSpringsCampground-Campsite.jpg", description: "This is a really beautiful sites, wow!"},
+// {name: "rocky mountain again", image: "https://newhampshirestateparks.reserveamerica.com/webphotos/NH/pid270015/0/540x360.jpg", description: "blah blaaljsdkjlskjflksjldkjlkjlfkjl"},
+// {name: "campgorund sites list", image: "http://tipsinahmoundscampground.com/wp-content/uploads/2017/07/IMG_6559-copy.jpg", description: "How can we climb up this mountain? I wanna let you know."}
 // ], function(err, campground){
 //   if(err){
 //     console.log(err);
@@ -59,7 +59,8 @@ app.get("/campgrounds", function(req,res){
 app.post("/campgrounds", function(req,res){
   var name = req.body.name;
   var image = req.body.image;
-  var newCampground = {name: name, image: image};
+  var description = req.body.description;
+  var newCampground = {name: name, image: image, description: description};
   Campground.create(newCampground, function(err, newlyCreated){
     if(err){
       console.log(err);
@@ -73,6 +74,19 @@ app.post("/campgrounds", function(req,res){
 app.get("/campgrounds/new", function(req,res){
   res.render("campgrounds/new");
 })
+
+// SHOW PAGE
+app.get("/campgrounds/:id", function(req, res){
+  Campground.findById(req.params.id, function(err, foundCampground){
+    if(err){
+      console.log(err);
+      console.log(foundCampground);
+    } else {
+      console.log(foundCampground);
+      res.render("campgrounds/show", {campground: foundCampground});
+    }
+  });
+});
 
 app.listen(4000, function(){
   console.log("The server is running!");
