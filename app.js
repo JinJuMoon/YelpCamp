@@ -3,7 +3,9 @@ var bodyParser = require("body-parser"),
     express    = require("express"),
     app        = express(),
     Campground = require("./models/campground");
+    seedDB     = require("./seeds")
 
+seedDB();
 mongoose.connect("mongodb://localhost:27017/yelp_camp", {useNewUrlParser: true});
 
 // connect db
