@@ -6,38 +6,13 @@ var bodyParser = require("body-parser"),
     Comment    = require("./models/comment"),
     seedDB     = require("./seeds");
 
-seedDB();
+
 mongoose.connect("mongodb://localhost:27017/yelp_camp", {useNewUrlParser: true});
-
-// connect db
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function(){
-  console.log("db is connected!");
-})
-
-
-app.set("view engine", "ejs");
-app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
-
-
-
-
-// Campground.create([
-// {name: "a beautiful mountain", image: "https://www.nps.gov/maca/planyourvisit/images/MapleSpringsCampground-Campsite.jpg", description: "This is a really beautiful sites, wow!"},
-// {name: "rocky mountain again", image: "https://newhampshirestateparks.reserveamerica.com/webphotos/NH/pid270015/0/540x360.jpg", description: "blah blaaljsdkjlskjflksjldkjlkjlfkjl"},
-// {name: "campgorund sites list", image: "http://tipsinahmoundscampground.com/wp-content/uploads/2017/07/IMG_6559-copy.jpg", description: "How can we climb up this mountain? I wanna let you know."}
-// ], function(err, campground){
-//   if(err){
-//     console.log(err);
-//   } else {
-//     console.log("Newly created: ");
-//     console.log(campground);
-//   }
-// });
-
-
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
+console.log(__dirname);
+seedDB();
 
 app.get("/", function(req,res){
   res.render("landing");
