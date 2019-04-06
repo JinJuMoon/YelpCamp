@@ -1,9 +1,12 @@
 var bodyParser = require("body-parser"),
     mongoose   = require("mongoose"),
     express    = require("express"),
-    app        = express();
+    app        = express(),
+    Campground = require("./models/campground");
 
 mongoose.connect("mongodb://localhost:27017/yelp_camp", {useNewUrlParser: true});
+
+// connect db
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function(){
@@ -16,15 +19,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 
-// model campground
-var campgroundSchema = mongoose.Schema({
-  name: String,
-  image: String,
-  description: String,
-  commnet: {text: String, author: String}
-});
 
-var Campground = mongoose.model("campground", campgroundSchema);
 
 // Campground.create([
 // {name: "a beautiful mountain", image: "https://www.nps.gov/maca/planyourvisit/images/MapleSpringsCampground-Campsite.jpg", description: "This is a really beautiful sites, wow!"},
@@ -100,7 +95,7 @@ app.post("/campground/:id/", function(req, res){
     if(err){
       console.log(err);
     } else{
-      console
+      Campground.updateOne(newComment)
     }
   })
 })
