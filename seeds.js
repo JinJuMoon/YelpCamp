@@ -34,7 +34,20 @@ function seedDB(){
             console.log(err);
           } else {
             console.log("added a campground!");
-            // add a few comments
+            Comment.create(
+              {
+                text: "This is a beautiful place!",
+                author: "Moon"
+              }, function(err, comment){
+                if(err){
+                  console.log(err);
+                } else {
+                  data.comments.push(comment);
+                  data.save();
+                  console.log("Created new comment");
+                }
+              }
+            )
           }
         });
       });

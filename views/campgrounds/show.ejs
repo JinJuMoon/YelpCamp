@@ -3,9 +3,17 @@
 <div class="container">
 
   <h1><%= campground.name %> </h1>
+
   <img src="<%= campground.image %>">
+
   <p><%= campground.description %></p>
-  <a href="/campgrounds">Go back</a>
+
+  <% campground.comments.forEach(function(comment){ %>
+    <p><%= comment.text %> -  <%= comment.author %></p>
+  <% }) %>
+
+  <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Make new comment</a>
+
 </div>
 
 <% include ../partials/footer %>
