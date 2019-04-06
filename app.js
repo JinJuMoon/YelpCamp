@@ -20,7 +20,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 var campgroundSchema = mongoose.Schema({
   name: String,
   image: String,
-  description: String
+  description: String,
+  commnet: {text: String, author: String}
 });
 
 var Campground = mongoose.model("campground", campgroundSchema);
@@ -80,13 +81,42 @@ app.get("/campgrounds/:id", function(req, res){
   Campground.findById(req.params.id, function(err, foundCampground){
     if(err){
       console.log(err);
-      console.log(foundCampground);
     } else {
-      console.log(foundCampground);
       res.render("campgrounds/show", {campground: foundCampground});
     }
   });
 });
+
+// =============
+// COMMENT PAGE
+// =============
+
+// comments create route
+app.post("/campground/:id/", function(req, res){
+  var text = req.body.text;
+  var author = req.body.author;
+  var newComment = {text: text, author: author};
+  Campground.findById(req.params.id, function(err, foundCampground){
+    if(err){
+      console.log(err);
+    } else{
+      console
+    }
+  })
+})
+
+
+// comments new route
+app.get("/campgrounds/:id/comments/new", function(req,res){
+  Campground.findById(req.params.id, function(err, foundCampground){
+    if(err){
+      console.log(err);
+    } else {
+      res.render("comments/new", {campground: foundCampground});
+    }
+  });
+})
+
 
 app.listen(4000, function(){
   console.log("The server is running!");
